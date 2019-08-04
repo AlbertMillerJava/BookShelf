@@ -1,9 +1,11 @@
+import bookshelf.RequestUrlMapper;
 import fi.iki.elonen.NanoHTTPD;
 
 import java.io.IOException;
 
 public class BookShelfApp extends NanoHTTPD {
 
+    RequestUrlMapper requestUrlMapper = new RequestUrlMapper();
 
     public BookShelfApp(int port) throws IOException {
         super(port);
@@ -21,7 +23,7 @@ public class BookShelfApp extends NanoHTTPD {
     }
     @Override
     public Response serve(IHTTPSession session){
-        return null;
+        return requestUrlMapper.delegateRequest(session);
     }
 
 }
