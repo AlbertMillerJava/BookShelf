@@ -19,64 +19,81 @@ public class BookController {
     private final static String BOOK_ID_PARAM_NAME = "bookId";
     public BookStorage bookStorage = new StaticListBookStorageImpl();
 
-    public Response serveGetBookRequest (IHTTPSession session){
+    public Response serveGetBookRequest(IHTTPSession session) {
+
         Map<String, List<String>> requestParameters = session.getParameters();
-        if (requestParameters.containsKey(BOOK_ID_PARAM_NAME)){
-            List<String> bookIdParams =requestParameters.get(BOOK_ID_PARAM_NAME);
+
+        if (requestParameters.containsKey(BOOK_ID_PARAM_NAME)) {
+            List<String> bookIdParams = requestParameters.get(BOOK_ID_PARAM_NAME);
             String bookIdParam = bookIdParams.get(0);
             long bookId = 0;
-            try{
+
+            try {
                 bookId = Long.parseLong(bookIdParam);
-            }catch (NumberFormatException nfe){
-                return newFixedLengthResponse(BAD_REQUEST, "text/plain", "request id ha ve to be a number");
+            } catch (NumberFormatException nfe) {
+                return newFixedLengthResponse(BAD_REQUEST, "text/plain", "request id have to be a number");
             }
-            Book book  = bookStorage.getBook(bookId);
-            if(book != null){
-                try{
+
+            Book book = bookStorage.getBook(bookId);
+
+            if (book != null) {
+                try {
                     ObjectMapper objectMapper = new ObjectMapper();
                     String response = objectMapper.writeValueAsString(book);
                     System.out.println(book.toString());
-                    return newFixedLengthResponse(OK,"application/json" , response);
-                }catch (JsonProcessingException e){
-                    return newFixedLengthResponse(INTERNAL_ERROR, "text/plain","cant get all books");
+                    return newFixedLengthResponse(OK, "application/json", response);
+                } catch (JsonProcessingException e) {
+                    return newFixedLengthResponse(INTERNAL_ERROR, "text/plain", "cant get all books");
                 }
             }
-            return newFixedLengthResponse(NOT_FOUND, "application/json","");
+
+            return newFixedLengthResponse(NOT_FOUND, "application/json", "");
         }
-        return newFixedLengthResponse(BAD_REQUEST , "text/plain" , "Uncorrected request");
-    }
-    public Response serveGetAllBookRequest (IHTTPSession session){
-        ObjectMapper objectMapper = new ObjectMapper();
-        String response = "";
-        try{
-            response = objectMapper.writeValueAsString(bookStorage.getAllBooks());
-        }catch (JsonProcessingException j){
-            System.err.println("Error during process request : \n" + j);
-            return newFixedLengthResponse(INTERNAL_ERROR, "text/plain","Internall error cant read all book");
-        }
-        return newFixedLengthResponse(OK,"application/json", response);
+        return newFixedLengthResponse(BAD_REQUEST, "text/plain", "Uncorrected request");
     }
 
-    public Response serveAddBookRequest (IHTTPSession session){
+    public Response serveGetAllBookRequest(IHTTPSession session) {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String response = "";
+
+        try {
+            response = objectMapper.writeValueAsString(bookStorage.getAllBooks());
+        } catch (JsonProcessingException j) {
+            System.err.println("Error during process request : \n" + j);
+            return newFixedLengthResponse(INTERNAL_ERROR, "text/plain", "Internal error there is no books");
+        }
+
+        return newFixedLengthResponse(OK, "application/json", response);
+    }
+
+    public Response serveAddBookRequest(IHTTPSession session) {
+
         ObjectMapper objectMapper = new ObjectMapper();
         long randomBookId = System.currentTimeMillis();
+
         String lengthHeader = session.getHeaders().get("content-length");
+
         int contentLength = Integer.parseInt(lengthHeader);
         byte[] buffer = new byte[contentLength];
 
-        try{
-            session.getInputStream().read(buffer,0,contentLength);
+        try {
+            session.getInputStream().read(buffer, 0, contentLength);
             String requestBody = new String(buffer).trim();
-            Book requestBook = objectMapper.readValue(requestBody,Book.class);
+            Book requestBook = objectMapper.readValue(requestBody, Book.class);
             requestBook.setId(randomBookId);
             bookStorage.addBook(requestBook);
 
-        }catch(Exception e){
+        } catch (Exception e) {
             System.err.println("Error during process request  \n" + e);
-            return newFixedLengthResponse(INTERNAL_ERROR, "text/plain","Internal error book hasnt been added");
+            return newFixedLengthResponse(INTERNAL_ERROR, "text/plain", "Internal error book " +
+                    "hasnt been added");
         }
-        return newFixedLengthResponse(OK,"text/plain","Book has been successfully added, id =" + randomBookId);
+        return newFixedLengthResponse(OK, "text/plain", "Book has been successfully added, id ="
+                + randomBookId);
     }
 
-
+    public BookStorage getBookStorage() {
+        return bookStorage;
+    }
 }

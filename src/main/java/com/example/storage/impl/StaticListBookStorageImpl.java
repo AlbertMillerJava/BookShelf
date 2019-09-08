@@ -10,9 +10,9 @@ public class StaticListBookStorageImpl implements BookStorage {
     private static List<Book> bookStorage = new ArrayList<Book>();
 
 
-    public Book getBook(long id){
-        for (Book book:bookStorage) {
-            if (book.getId() == id){
+    public Book getBook(long id) {
+        for (Book book : bookStorage) {
+            if (book.getId() == id) {
                 return book;
             }
         }
@@ -26,7 +26,5 @@ public class StaticListBookStorageImpl implements BookStorage {
     public void addBook(Book book) {
         bookStorage.add(book);
     }
-
-
 
 }
