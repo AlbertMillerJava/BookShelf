@@ -55,4 +55,10 @@ public class Book {
     public String getPublishingHouse() {
         return publishingHouse;
     }
+
+    @Override
+    public String toString() {
+
+        return "id: " + id + " tytul: "+title;
+    }
 }

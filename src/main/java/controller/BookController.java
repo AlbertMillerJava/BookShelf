@@ -1,10 +1,14 @@
 package controller;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
 import fi.iki.elonen.NanoHTTPD.Response;
 import fi.iki.elonen.NanoHTTPD.IHTTPSession;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.annotation.*;
 import storage.BookStorage;
+import storage.impl.PostgresBookStorageImpl;
 import storage.impl.StaticListBookStorageImpl;
 import type.Book;
 
@@ -17,7 +21,7 @@ import static fi.iki.elonen.NanoHTTPD.newFixedLengthResponse;
 
 public class BookController {
     private final static String BOOK_ID_PARAM_NAME = "bookId";
-    private BookStorage bookStorage = new StaticListBookStorageImpl();
+    public BookStorage bookStorage = new StaticListBookStorageImpl();
 
     public Response serveGetBookRequest (IHTTPSession session){
         Map<String, List<String>> requestParameters = session.getParameters();
@@ -35,6 +39,7 @@ public class BookController {
                 try{
                     ObjectMapper objectMapper = new ObjectMapper();
                     String response = objectMapper.writeValueAsString(book);
+                    System.out.println(book.toString());
                     return newFixedLengthResponse(OK,"application/json" , response);
                 }catch (JsonProcessingException e){
                     return newFixedLengthResponse(INTERNAL_ERROR, "text/plain","cant get all books");
@@ -55,18 +60,21 @@ public class BookController {
         }
         return newFixedLengthResponse(OK,"application/json", response);
     }
+
     public Response serveAddBookRequest (IHTTPSession session){
         ObjectMapper objectMapper = new ObjectMapper();
         long randomBookId = System.currentTimeMillis();
         String lengthHeader = session.getHeaders().get("content-length");
         int contentLength = Integer.parseInt(lengthHeader);
         byte[] buffer = new byte[contentLength];
+
         try{
             session.getInputStream().read(buffer,0,contentLength);
             String requestBody = new String(buffer).trim();
             Book requestBook = objectMapper.readValue(requestBody,Book.class);
             requestBook.setId(randomBookId);
             bookStorage.addBook(requestBook);
+
         }catch(Exception e){
             System.err.println("Error during process request  \n" + e);
             return newFixedLengthResponse(INTERNAL_ERROR, "text/plain","Internal error book hasnt been added");
