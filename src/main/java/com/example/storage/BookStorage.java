@@ -10,6 +10,6 @@ public interface BookStorage {
 
     List<Book> getAllBooks();
 
-    void addBook (Book book);
+    int addBook (Book book);
 
 }

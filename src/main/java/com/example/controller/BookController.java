@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.storage.impl.PostgresBookStorageImpl;
 import fi.iki.elonen.NanoHTTPD.Response;
 import fi.iki.elonen.NanoHTTPD.IHTTPSession;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -17,7 +18,7 @@ import static fi.iki.elonen.NanoHTTPD.newFixedLengthResponse;
 
 public class BookController {
     private final static String BOOK_ID_PARAM_NAME = "bookId";
-    public BookStorage bookStorage = new StaticListBookStorageImpl();
+    public BookStorage bookStorage = new PostgresBookStorageImpl();
 
     public Response serveGetBookRequest(IHTTPSession session) {
 
@@ -70,10 +71,9 @@ public class BookController {
     public Response serveAddBookRequest(IHTTPSession session) {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        long randomBookId = System.currentTimeMillis();
 
         String lengthHeader = session.getHeaders().get("content-length");
-
+        int bookId = 0;
         int contentLength = Integer.parseInt(lengthHeader);
         byte[] buffer = new byte[contentLength];
 
@@ -81,8 +81,7 @@ public class BookController {
             session.getInputStream().read(buffer, 0, contentLength);
             String requestBody = new String(buffer).trim();
             Book requestBook = objectMapper.readValue(requestBody, Book.class);
-            requestBook.setId(randomBookId);
-            bookStorage.addBook(requestBook);
+            bookId = bookStorage.addBook(requestBook);
 
         } catch (Exception e) {
             System.err.println("Error during process request  \n" + e);
@@ -90,7 +89,7 @@ public class BookController {
                     "hasnt been added");
         }
         return newFixedLengthResponse(OK, "text/plain", "Book has been successfully added, id ="
-                + randomBookId);
+                + bookId);
     }
 
     public BookStorage getBookStorage() {

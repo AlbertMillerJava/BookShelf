@@ -23,8 +23,9 @@ public class StaticListBookStorageImpl implements BookStorage {
         return bookStorage;
     }
 
-    public void addBook(Book book) {
+    public int addBook(Book book) {
         bookStorage.add(book);
+        return (int)book.getId();
     }
 
 }

@@ -105,31 +105,37 @@ public class PostgresBookStorageImpl implements BookStorage {
         return books;
     }
 
-    public void addBook(Book book) {
+    public int addBook(Book book) {
 
         final String sqlInsertBook = "INSERT INTO books( " + "book_id, title, author, page_sum, year_of_published," +
                 " publishing_house) "
-                + "VALUES (?,?,?,?,?,?);";
+                + "VALUES (nextval('sequence'),?,?,?,?,?) returning book_id;";
+        int book_id = 2;
         Connection connection = initializeDataBaseConnection();
         PreparedStatement preparedStatement = null;
         try {
 
-            int number = getAllBooks().size() - 1;
-            long lenght = getAllBooks().get(number).getId();
             preparedStatement = connection.prepareStatement(sqlInsertBook);
+           // preparedStatement.setLong(1, book.getId());
+            preparedStatement.setString(1, book.getTitle());
+            preparedStatement.setString(2, book.getAuthor());
+            preparedStatement.setInt(3, book.getPageSum());
+            preparedStatement.setInt(4, book.getYearOfPublish());
+            preparedStatement.setString(5, book.getPublishingHouse());
 
-            preparedStatement.setLong(1, (lenght + 1));
-            preparedStatement.setString(2, book.getTitle());
-            preparedStatement.setString(3, book.getAuthor());
-            preparedStatement.setInt(4, book.getPageSum());
-            preparedStatement.setInt(5, book.getYearOfPublish());
-            preparedStatement.setString(6, book.getPublishingHouse());
+            preparedStatement.execute();
+            ResultSet resultSet = preparedStatement.getResultSet();
+            if(resultSet.next()){
+                book_id = resultSet.getInt(1);
+            }
 
-            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Failed in update sql query");
         } finally {
             closeDatabaseResources(connection, preparedStatement);
         }
+        System.out.println(book_id);
+        return book_id;
+
     }
 }
