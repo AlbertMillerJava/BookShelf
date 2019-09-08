@@ -1,4 +1,4 @@
-package type;
+package com.example.type;
 
 public class Book {
     private long id;

@@ -1,8 +1,14 @@
+package com.example;
+
+import com.example.BookShelfApp;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
 
 public class BookShelfAppTest {
 
@@ -27,7 +33,8 @@ public class BookShelfAppTest {
 
     @Test
     public void addMethod_correct_shouldReturnStatus200() throws Exception{
-        vith().body(BOOK_1).when().post("/book/add").then().statusCode(200).body(startsWith("Book has been successfully added, id ="));
+        System.out.println("wejscie");
+        with().body(BOOK_1).when().post("/book/add").then().statusCode(200).body(startsWith("Book has been successfully added, id ="));
     }
 }
 

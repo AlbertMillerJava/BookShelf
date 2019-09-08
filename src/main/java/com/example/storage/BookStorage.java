@@ -1,6 +1,6 @@
-package storage;
+package com.example.storage;
 
-import type.Book;
+import com.example.type.Book;
 
 import java.util.List;
 

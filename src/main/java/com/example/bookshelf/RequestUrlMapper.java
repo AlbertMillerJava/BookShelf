@@ -1,9 +1,8 @@
-package bookshelf;
+package com.example.bookshelf;
 //lombok biblioteka wlaczyc adnotation processing
 //j unit, assertg ,vavr
-import controller.BookController;
+import com.example.controller.BookController;
 import fi.iki.elonen.NanoHTTPD;
-import fi.iki.elonen.NanoHTTPD.IHTTPSession;
 import fi.iki.elonen.NanoHTTPD.Response;
 
 

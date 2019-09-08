@@ -1,16 +1,12 @@
-package controller;
+package com.example.controller;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
 import fi.iki.elonen.NanoHTTPD.Response;
 import fi.iki.elonen.NanoHTTPD.IHTTPSession;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.annotation.*;
-import storage.BookStorage;
-import storage.impl.PostgresBookStorageImpl;
-import storage.impl.StaticListBookStorageImpl;
-import type.Book;
+import com.example.storage.BookStorage;
+import com.example.storage.impl.StaticListBookStorageImpl;
+import com.example.type.Book;
 
 import java.util.List;
 import java.util.Map;

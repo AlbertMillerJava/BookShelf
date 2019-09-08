@@ -1,7 +1,7 @@
-package storage.impl;
+package com.example.storage.impl;
 
-import storage.BookStorage;
-import type.Book;
+import com.example.storage.BookStorage;
+import com.example.type.Book;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -1,4 +1,6 @@
-import bookshelf.RequestUrlMapper;
+package com.example;
+
+import com.example.bookshelf.RequestUrlMapper;
 import fi.iki.elonen.NanoHTTPD;
 
 import java.io.IOException;
