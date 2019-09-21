@@ -9,8 +9,7 @@ import fi.iki.elonen.NanoHTTPD;
 import fi.iki.elonen.NanoHTTPD.Response;
 
 
-import static fi.iki.elonen.NanoHTTPD.Method.GET;
-import static fi.iki.elonen.NanoHTTPD.Method.POST;
+import static fi.iki.elonen.NanoHTTPD.Method.*;
 import static fi.iki.elonen.NanoHTTPD.Response.Status.NOT_FOUND;
 
 public class RequestUrlMapper {
@@ -23,6 +22,7 @@ public class RequestUrlMapper {
     private final static String GET_ALL_CUSTOMER_URL = "/customer/getAll";
 
     private final static String ADD_ORDER_URL = "/order/add";
+    private final static String DELETE_ITEM_FROM_ORDER_URL = "/order/put";
 
     private BookController bookController = new BookController();
     private CustomerController customerController = new CustomerController();
@@ -46,10 +46,11 @@ public class RequestUrlMapper {
         }
         if(POST.equals(session.getMethod()) && ADD_ORDER_URL.equals(session.getUri())){
             return  orderController.serveAddOrderRequest(session);
+        }else if (PUT.equals(session.getMethod()) && DELETE_ITEM_FROM_ORDER_URL.equals(session.getUri())){
+            return  orderController.serveChangeOrderRequest(session);
         }
         return NanoHTTPD.newFixedLengthResponse(NOT_FOUND, "text/plain", "Not Found");
     }
-
 
     public BookController getBookController() {
         return bookController;

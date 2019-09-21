@@ -1,0 +1,13 @@
+{
+  "orderId": 15,
+  "orderItems": [
+    {
+      "bookId": 48,
+      "amount": 100
+    },
+    {
+      "bookId": 47,
+      "amount": 1000
+    }
+  ]
+}
