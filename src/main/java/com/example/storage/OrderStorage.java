@@ -9,7 +9,7 @@ public interface OrderStorage {
 
     Order getOrder(int orderId);
 
-    int addOrder(List<OrderItems>);
+    int addOrder(List<OrderItems> orderedItems);
 
     List<Order> getAllOrders();
 }
