@@ -4,9 +4,8 @@ import com.example.storage.CustomerStorage;
 import com.example.storage.OrderStorage;
 import com.example.storage.impl.PostgresCustomerStorageImpl;
 import com.example.storage.impl.PostgresOrderStorageImpl;
-import com.example.type.Customer;
 import com.example.type.Order;
-import com.example.type.OrderData;
+import utils.dataTransferObjects.OrderData;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fi.iki.elonen.NanoHTTPD;
 

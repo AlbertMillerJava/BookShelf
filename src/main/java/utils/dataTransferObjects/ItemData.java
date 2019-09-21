@@ -1,4 +1,7 @@
-package com.example.type;
+package utils.dataTransferObjects;
+
+import com.example.type.Book;
+import com.example.type.OrderItem;
 
 public class ItemData {
     int bookId;

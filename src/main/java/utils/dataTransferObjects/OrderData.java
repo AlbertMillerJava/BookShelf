@@ -1,11 +1,9 @@
-package com.example.type;
+package utils.dataTransferObjects;
 
-import utils.DatabaseConnection;
+import com.example.type.Customer;
+import com.example.type.Order;
+import com.example.type.OrderItem;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
