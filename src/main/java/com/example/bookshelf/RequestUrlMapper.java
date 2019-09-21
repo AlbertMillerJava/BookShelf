@@ -4,6 +4,7 @@ package com.example.bookshelf;
 
 import com.example.controller.BookController;
 import com.example.controller.CustomerController;
+import com.example.controller.OrderController;
 import fi.iki.elonen.NanoHTTPD;
 import fi.iki.elonen.NanoHTTPD.Response;
 
@@ -21,8 +22,12 @@ public class RequestUrlMapper {
     private final static String GET_CUSTOMER_URL = "/customer/get";
     private final static String GET_ALL_CUSTOMER_URL = "/customer/getAll";
 
+    private final static String ADD_ORDER_URL = "/order/add";
+
     private BookController bookController = new BookController();
     private CustomerController customerController = new CustomerController();
+    private OrderController orderController = new OrderController();
+
 
     public Response delegateRequest(NanoHTTPD.IHTTPSession session) {
         if(GET.equals(session.getMethod()) && GET_CUSTOMER_URL.equals(session.getUri())){
@@ -38,6 +43,9 @@ public class RequestUrlMapper {
             return bookController.serveGetAllBookRequest(session);
         } else if (POST.equals(session.getMethod()) && ADD_BOOK_URL.equals(session.getUri())) {
             return bookController.serveAddBookRequest(session);
+        }
+        if(POST.equals(session.getMethod()) && ADD_ORDER_URL.equals(session.getUri())){
+            return  orderController.serveAddOrderRequest(session);
         }
         return NanoHTTPD.newFixedLengthResponse(NOT_FOUND, "text/plain", "Not Found");
     }

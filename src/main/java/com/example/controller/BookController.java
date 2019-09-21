@@ -6,7 +6,6 @@ import fi.iki.elonen.NanoHTTPD.IHTTPSession;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.example.storage.BookStorage;
-import com.example.storage.impl.StaticListBookStorageImpl;
 import com.example.type.Book;
 
 import java.util.List;

@@ -87,7 +87,7 @@ public class CustomerController {
             return newFixedLengthResponse(INTERNAL_ERROR, "text/plain", "Internal error customer " +
                     "hasnt been added");
         }
-        return newFixedLengthResponse(OK, "text/plain", "Book has been successfully added, id ="
+        return newFixedLengthResponse(OK, "text/plain", "Customer has been successfully added, id ="
                 + customerId);
     }
 

@@ -1,21 +1,16 @@
 package com.example.type;
 
-public class OrderItems {
+public class OrderItem {
     private int orderItemId;
-    private int orderId;
-    private int bookId;
+    private Book book;
     private int amount;
 
     public int getOrderItemId() {
         return orderItemId;
     }
 
-    public int getOrderId() {
-        return orderId;
-    }
-
-    public int getBookId() {
-        return bookId;
+    public Book getBook() {
+        return book;
     }
 
     public int getAmount() {
@@ -26,12 +21,8 @@ public class OrderItems {
         this.orderItemId = orderItemId;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
-    }
-
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
+    public void setBook(Book book) {
+        this.book = book;
     }
 
     public void setAmount(int amount) {

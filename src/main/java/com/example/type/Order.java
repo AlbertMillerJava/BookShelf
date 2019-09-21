@@ -1,43 +1,44 @@
 package com.example.type;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 public class Order {
-    private  int orderId;
-    private LocalDateTime orderDate;
-    private int customer_id;
-    private List<OrderItems> orderedItems;
+    private  long orderId;
+    private LocalDate orderDate;
+    private Customer customer;
+    private List<OrderItem> orderedItems;
 
-    public void setOrderId(int orderId) {
+    public void setOrderId(long orderId) {
         this.orderId = orderId;
     }
 
-    public void setOrderDate(LocalDateTime orderDate) {
+    public void setOrderDate(LocalDate orderDate) {
         this.orderDate = orderDate;
     }
 
-    public void setCustomer_id(int customer_id) {
-        this.customer_id = customer_id;
-    }
 
-    public int getOrderId() {
+    public long getOrderId() {
         return orderId;
     }
 
-    public LocalDateTime getOrderDate() {
+    public LocalDate getOrderDate() {
         return orderDate;
     }
 
-    public int getCustomer_id() {
-        return customer_id;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public List<OrderItems> getOrderedItems() {
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public List<OrderItem> getOrderedItems() {
         return orderedItems;
     }
 
-    public void setOrderedItems(List<OrderItems> orderedItems) {
+    public void setOrderedItems(List<OrderItem> orderedItems) {
         this.orderedItems = orderedItems;
     }
 }

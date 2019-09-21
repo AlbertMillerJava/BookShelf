@@ -3,39 +3,15 @@ package com.example.storage.impl;
 import com.example.storage.CustomerStorage;
 import com.example.type.Customer;
 import com.example.type.Customer;
+import utils.DatabaseConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static utils.DatabaseConnection.initializeDataBaseConnection;
+
 public class PostgresCustomerStorageImpl implements CustomerStorage {
-    private static final String JDBC_URL = "jdbc:postgresql://localhost:5432/book_shelf";
-    private static final String DATABASE_USER = "postgres";
-    private static final String DATABASE_PASS = "password";
-
-    private Connection initializeDataBaseConnection() {
-        try {
-            return DriverManager.getConnection(JDBC_URL, DATABASE_USER, DATABASE_PASS);
-        } catch (SQLException sql) {
-            System.err.println("Server cant initialize connection to databse");
-            throw new RuntimeException("Server cant initialize connection to databse");
-        }
-    }
-
-    private void closeDatabaseResources(Connection connection, Statement statement) {
-        try {
-            if (statement != null) {
-                statement.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
-        } catch (SQLException s) {
-            System.err.println("Error during closing databse resources");
-            throw new RuntimeException("Error during closing databse resources");
-        }
-
-    }
 
 
     @Override
@@ -59,7 +35,7 @@ public class PostgresCustomerStorageImpl implements CustomerStorage {
             System.err.println("Cant stand writing these exceptions anymore .." + s.getMessage());
             throw new RuntimeException("Cant stand writing these exceptions anymore ..");
         } finally {
-            closeDatabaseResources(connection, preparedStatement);
+            DatabaseConnection.closeDatabaseResources(connection, preparedStatement);
         }
     return null;
     }
@@ -67,7 +43,7 @@ public class PostgresCustomerStorageImpl implements CustomerStorage {
     @Override
     public List<Customer> getAllCustomers() {
         final String getAll = "SELECT * FROM customers";
-        Connection connection = initializeDataBaseConnection();
+        Connection connection = DatabaseConnection.initializeDataBaseConnection();
         Statement statement = null;
         List<Customer> customers = new ArrayList<>();
 
@@ -87,7 +63,7 @@ public class PostgresCustomerStorageImpl implements CustomerStorage {
             throw new RuntimeException("Failed in geting sql query in getallcustomers");
 
         } finally {
-            closeDatabaseResources(connection, statement);
+            DatabaseConnection.closeDatabaseResources(connection, statement);
         }
         return customers;
     }
@@ -97,7 +73,7 @@ public class PostgresCustomerStorageImpl implements CustomerStorage {
         final String sqlInsertCustomer = "INSERT INTO customers (customer_id, name) VALUES (nextval('sequence'),?) " +
                 "returning customer_id;";
         int customerId = 0;
-        Connection connection = initializeDataBaseConnection();
+        Connection connection = DatabaseConnection.initializeDataBaseConnection();
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement(sqlInsertCustomer);
@@ -112,7 +88,7 @@ public class PostgresCustomerStorageImpl implements CustomerStorage {
         } catch (SQLException e) {
             throw new RuntimeException("Failed in update sql query");
         } finally {
-            closeDatabaseResources(connection, preparedStatement);
+            DatabaseConnection.closeDatabaseResources(connection, preparedStatement);
         }
 
         return customerId;

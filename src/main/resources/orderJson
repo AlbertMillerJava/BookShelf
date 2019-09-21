@@ -1,13 +1,12 @@
-{"orderId":100,
+{
   "customerId":45,
   "orderItems":[
     {
-      "orderItemId":45,
+
       "bookId":48,
       "amount":1
     },
     {
-      "orderItemId":45,
       "bookId":48,
       "amount":1
     }]
