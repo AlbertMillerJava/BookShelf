@@ -1,11 +1,13 @@
 package com.example.type;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Order {
     private  int orderId;
     private LocalDateTime orderDate;
     private int customer_id;
+    private List<OrderItems> orderedItems;
 
     public void setOrderId(int orderId) {
         this.orderId = orderId;
@@ -29,5 +31,13 @@ public class Order {
 
     public int getCustomer_id() {
         return customer_id;
+    }
+
+    public List<OrderItems> getOrderedItems() {
+        return orderedItems;
+    }
+
+    public void setOrderedItems(List<OrderItems> orderedItems) {
+        this.orderedItems = orderedItems;
     }
 }
