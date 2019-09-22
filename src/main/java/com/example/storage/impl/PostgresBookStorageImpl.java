@@ -2,7 +2,7 @@ package com.example.storage.impl;
 
 import com.example.storage.BookStorage;
 import com.example.type.Book;
-import utils.DatabaseConnection;
+import com.example.utils.DatabaseConnection;
 
 import java.sql.*;
 import java.util.ArrayList;

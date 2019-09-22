@@ -1,4 +1,4 @@
-package utils.dataTransferObjects;
+package com.example.utils.dataTransferObjects;
 
 import com.example.type.Book;
 import com.example.type.OrderItem;

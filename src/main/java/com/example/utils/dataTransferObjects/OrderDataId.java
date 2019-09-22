@@ -1,30 +1,28 @@
-package utils.dataTransferObjects;
+package com.example.utils.dataTransferObjects;
 
-import com.example.type.Customer;
 import com.example.type.Order;
 import com.example.type.OrderItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderData {
+public class OrderDataId {
+    private long orderId;
+    private List<ItemData> orderItems;
 
-    int customerId;
-    List<ItemData> orderItems;
-
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setOrderId(long orderId) {
+        this.orderId = orderId;
     }
 
-    public void setOrderItems(List<ItemData> orderItems) {
+    public void setItemData(List<ItemData> orderItems) {
         this.orderItems = orderItems;
     }
 
-    public Order createOrder(){
+    public Order createOrderById(){
         Order order  =  new Order();
-        Customer customer = new Customer();
-        customer.setCustomerId(customerId);
-        order.setCustomer(customer);
+
+        order.setOrderId(orderId);
+
         List<OrderItem> orderedItems = new ArrayList<>();
         for(ItemData itemData: orderItems){
             orderedItems.add(itemData.createOrderItem());
@@ -32,5 +30,4 @@ public class OrderData {
         order.setOrderedItems(orderedItems);
         return order;
     }
-
 }

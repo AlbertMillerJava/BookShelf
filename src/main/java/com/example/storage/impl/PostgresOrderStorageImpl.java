@@ -3,7 +3,7 @@ package com.example.storage.impl;
 import com.example.storage.OrderStorage;
 import com.example.type.Order;
 import com.example.type.OrderItem;
-import utils.DatabaseConnection;
+import com.example.utils.DatabaseConnection;
 
 import java.sql.*;
 import java.util.List;

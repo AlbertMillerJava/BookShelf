@@ -5,11 +5,10 @@ import com.example.storage.OrderStorage;
 import com.example.storage.impl.PostgresCustomerStorageImpl;
 import com.example.storage.impl.PostgresOrderStorageImpl;
 import com.example.type.Order;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-import utils.dataTransferObjects.OrderData;
+import com.example.utils.dataTransferObjects.OrderData;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fi.iki.elonen.NanoHTTPD;
-import utils.dataTransferObjects.OrderDataId;
+import com.example.utils.dataTransferObjects.OrderDataId;
 
 import static fi.iki.elonen.NanoHTTPD.Response.Status.INTERNAL_ERROR;
 import static fi.iki.elonen.NanoHTTPD.Response.Status.OK;

@@ -2,14 +2,13 @@ package com.example.storage.impl;
 
 import com.example.storage.CustomerStorage;
 import com.example.type.Customer;
-import com.example.type.Customer;
-import utils.DatabaseConnection;
+import com.example.utils.DatabaseConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static utils.DatabaseConnection.initializeDataBaseConnection;
+import static com.example.utils.DatabaseConnection.initializeDataBaseConnection;
 
 public class PostgresCustomerStorageImpl implements CustomerStorage {
 
